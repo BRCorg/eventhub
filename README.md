@@ -129,3 +129,31 @@ feat ajouter le login               → il manque les deux-points
 - [Guide Conventional Commits — Stéphane Robert](https://blog.stephane-robert.info/docs/developper/conventional-commits/)
 - [Convention Angular](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit)
 - [Semantic Versioning](https://semver.org/lang/fr/)
+
+```mermaid
+gitGraph
+    commit id: "init"
+    branch dev
+    checkout dev
+    commit id: "setup"
+    branch feature/auth-jwt
+    checkout feature/auth-jwt
+    commit id: "feat(auth): login"
+    commit id: "test(auth): login"
+    checkout dev
+    merge feature/auth-jwt id: "PR #1"
+    branch fix/date-reservation
+    checkout fix/date-reservation
+    commit id: "fix(web): dates"
+    checkout dev
+    merge fix/date-reservation id: "PR #2"
+    checkout main
+    merge dev id: "v1.0.0" tag: "v1.0.0"
+    branch hotfix/token-expire
+    checkout hotfix/token-expire
+    commit id: "fix(auth): token"
+    checkout main
+    merge hotfix/token-expire id: "v1.0.1" tag: "v1.0.1"
+    checkout dev
+    merge hotfix/token-expire
+```
