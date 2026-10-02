@@ -2,18 +2,18 @@
   "name": "eventhub",
   "private": true,
   "version": "1.0.0",
-  "description": "Ce projet suit la spécification **Conventional Commits** (v1.0.0) : une convention légère pour écrire des messages de commit lisibles par les humains et exploitables par des outils (génération de changelog, versionnage sémantique automatique, CI).",
-  "main": "index.js",
+  "description": "Plateforme de gestion d'événements et de billetterie en ligne",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepare": "husky"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BRCorg/eventhub.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
