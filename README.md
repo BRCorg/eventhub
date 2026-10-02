@@ -1,159 +1,117 @@
-# eventhub
+# EventHub
 
-## Conventions de commit
+Plateforme de gestion d'événements et de billetterie en ligne : les **organisateurs** créent, promeuvent et pilotent leurs événements, les **participants** les découvrent et réservent leurs places, les **administrateurs** supervisent la plateforme.
 
-Ce projet suit la spécification **Conventional Commits** (v1.0.0) : une convention légère pour écrire des messages de commit lisibles par les humains et exploitables par des outils (génération de changelog, versionnage sémantique automatique, CI).
+Projet fil rouge — Concepteur Développeur d'Applications (CDA), 3WA.
 
-### Structure d'un message
+## Sommaire
 
-```
-<type>[scope optionnel]: <description>
+- [Stack technique](#stack-technique)
+- [Architecture](#architecture)
+- [Structure du dépôt](#structure-du-dépôt)
+- [Démarrage](#démarrage)
+- [Qualité du code](#qualité-du-code)
+- [Organisation du travail](#organisation-du-travail)
+- [Documentation](#documentation)
 
-[corps optionnel]
+## Stack technique
 
-[footer(s) optionnel(s)]
-```
+| Couche             | Technologie                                      |
+| ------------------ | ------------------------------------------------ |
+| Frontend           | React, TypeScript, Vite                          |
+| Backend            | Node.js, Express, TypeScript                     |
+| Base relationnelle | PostgreSQL                                       |
+| Base NoSQL         | MongoDB                                          |
+| Cache              | Redis                                            |
+| Serveur web        | Nginx                                            |
+| Authentification   | JWT                                              |
+| Conteneurisation   | Docker, docker-compose                           |
+| Qualité            | ESLint, Prettier, Husky, lint-staged, commitlint |
 
-| Élément         | Obligatoire | Rôle                                                                            |
-| --------------- | ----------- | ------------------------------------------------------------------------------- |
-| **type**        | oui         | Nature du changement (`feat`, `fix`, ...)                                       |
-| **scope**       | non         | Partie du code concernée, entre parenthèses : `feat(parser): ...`               |
-| **description** | oui         | Résumé court du changement, juste après `: `                                    |
-| **corps**       | non         | Explication détaillée, séparée de l'en-tête par une ligne vide                  |
-| **footer**      | non         | Métadonnées (`BREAKING CHANGE`, `Refs`, `Reviewed-by`...), après une ligne vide |
-
-### Types
-
-Seuls `feat` et `fix` sont imposés par la spécification. Les autres types sont ceux recommandés par la convention Angular, la plus utilisée.
-
-| Type       | Usage                                                                |
-| ---------- | -------------------------------------------------------------------- |
-| `feat`     | Ajout d'une nouvelle fonctionnalité                                  |
-| `fix`      | Correction d'un bug                                                  |
-| `docs`     | Documentation uniquement                                             |
-| `style`    | Formatage, espaces, points-virgules (aucun changement de logique)    |
-| `refactor` | Restructuration du code sans ajout de fonctionnalité ni correction   |
-| `perf`     | Amélioration des performances                                        |
-| `test`     | Ajout ou correction de tests                                         |
-| `build`    | Système de build, dépendances externes                               |
-| `ci`       | Configuration de l'intégration continue                              |
-| `chore`    | Tâches de maintenance qui ne touchent ni le code source ni les tests |
-| `revert`   | Annulation d'un commit précédent                                     |
-
-### Breaking changes
-
-Un changement qui casse la compatibilité se signale de deux façons (cumulables) :
-
-- un `!` juste avant les `:` → `feat!: ...` ou `feat(api)!: ...`
-- un footer `BREAKING CHANGE: <description>` (en majuscules)
-
-Un breaking change peut accompagner n'importe quel type.
-
-### Lien avec le versionnage sémantique (SemVer)
-
-| Commit                   | Version     | Exemple       |
-| ------------------------ | ----------- | ------------- |
-| `fix`                    | **PATCH**   | 1.0.0 → 1.0.1 |
-| `feat`                   | **MINOR**   | 1.0.0 → 1.1.0 |
-| `BREAKING CHANGE` ou `!` | **MAJOR**   | 1.0.0 → 2.0.0 |
-| autres types             | aucun effet | —             |
-
-### Bonnes pratiques
-
-- Type en **minuscules**
-- Description à l'**impératif**, courte, sans majuscule initiale ni point final
-- En-tête de **100 caractères maximum**
-- **Un commit = un changement** : si un commit relève de plusieurs types, le découper
-- Le corps explique **pourquoi**, pas _comment_ (le code montre déjà le comment)
-
-### Exemples
-
-Commit simple :
-
-```
-docs: corriger l'orthographe du CHANGELOG
-```
-
-Avec un scope :
-
-```
-feat(lang): ajouter la langue polonaise
-```
-
-Avec un `!` pour signaler un breaking change :
-
-```
-feat(api)!: envoyer un email au client à l'expédition du produit
-```
-
-Avec un footer `BREAKING CHANGE` :
-
-```
-feat: autoriser l'objet de config à étendre d'autres configs
-
-BREAKING CHANGE: la clé `extends` du fichier de config sert désormais à étendre d'autres fichiers de config
-```
-
-Avec un corps et plusieurs footers :
-
-```
-fix: empêcher les requêtes concurrentes
-
-Introduit un identifiant de requête et une référence vers la dernière requête.
-Les réponses entrantes autres que celle de la dernière requête sont ignorées.
-
-Reviewed-by: Z
-Refs: #123
-```
-
-Annulation :
-
-```
-revert: annuler "feat: ajouter la langue polonaise"
-
-Refs: 676104e
-```
-
-### Exemples refusés
-
-```
-update                              → pas de type
-Feat: ajout login                   → type en majuscule
-fix: Correction du bug.             → majuscule initiale et point final
-feat ajouter le login               → il manque les deux-points
-```
-
-### Références
-
-- [Spécification Conventional Commits (FR)](https://www.conventionalcommits.org/fr/v1.0.0/)
-- [Guide Conventional Commits — Stéphane Robert](https://blog.stephane-robert.info/docs/developper/conventional-commits/)
-- [Convention Angular](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit)
-- [Semantic Versioning](https://semver.org/lang/fr/)
+## Architecture
 
 ```mermaid
-gitGraph
-    commit id: "init"
-    branch dev
-    checkout dev
-    commit id: "setup"
-    branch feature/auth-jwt
-    checkout feature/auth-jwt
-    commit id: "feat(auth): login"
-    commit id: "test(auth): login"
-    checkout dev
-    merge feature/auth-jwt id: "PR #1"
-    branch fix/date-reservation
-    checkout fix/date-reservation
-    commit id: "fix(web): dates"
-    checkout dev
-    merge fix/date-reservation id: "PR #2"
-    checkout main
-    merge dev id: "v1.0.0" tag: "v1.0.0"
-    branch hotfix/token-expire
-    checkout hotfix/token-expire
-    commit id: "fix(auth): token"
-    checkout main
-    merge hotfix/token-expire id: "v1.0.1" tag: "v1.0.1"
-    checkout dev
-    merge hotfix/token-expire
+flowchart LR
+    U[Navigateur] -->|HTTP :80| N[Nginx]
+    N -->|/| W[Frontend React]
+    N -->|/api| A[API Express]
+    A --> P[(PostgreSQL)]
+    A --> M[(MongoDB)]
+    A --> R[(Redis)]
 ```
+
+Chaque service tourne dans son propre conteneur. Nginx est le seul point d'entrée exposé ; les bases ne sont accessibles que depuis le réseau Docker interne.
+
+Le détail des choix (rôle de chaque base, sécurité, enjeux DevOps) est dans l'[analyse du projet](docs/analyse-projet.md).
+
+## Structure du dépôt
+
+```
+eventhub/
+├── .github/
+│   ├── ISSUE_TEMPLATE/        # Modèles d'issues (fonctionnalité, bug)
+│   └── pull_request_template.md
+├── .husky/                    # Hooks Git (pre-commit, commit-msg)
+├── docs/                      # Documentation du projet
+├── .editorconfig              # Règles d'édition communes (indentation, fins de ligne)
+├── .gitattributes             # Fins de ligne LF forcées dans le dépôt
+├── commitlint.config.mjs      # Règles des messages de commit
+├── eslint.config.mjs          # Règles de lint
+└── package.json               # Outils de qualité partagés
+```
+
+À venir : `apps/api` (backend), `apps/web` (frontend), `nginx/` et les fichiers docker-compose.
+
+## Démarrage
+
+### Prérequis
+
+- Node.js 20 ou supérieur
+- npm
+- Git
+- Docker et Docker Compose
+
+### Installation
+
+```bash
+git clone https://github.com/BRCorg/eventhub.git
+cd eventhub
+git switch dev
+npm install
+```
+
+`npm install` installe aussi les hooks Git (script `prepare`) : aucune configuration manuelle n'est nécessaire.
+
+### Scripts
+
+| Commande               | Rôle                                            |
+| ---------------------- | ----------------------------------------------- |
+| `npm run lint`         | Analyse le code avec ESLint                     |
+| `npm run lint:fix`     | Corrige automatiquement ce qui peut l'être      |
+| `npm run format`       | Formate tout le projet avec Prettier            |
+| `npm run format:check` | Vérifie le formatage sans modifier (pour la CI) |
+
+## Qualité du code
+
+Chaque commit passe automatiquement par deux hooks Git :
+
+| Hook         | Vérification                                                              |
+| ------------ | ------------------------------------------------------------------------- |
+| `pre-commit` | ESLint et Prettier sur les fichiers indexés (`*.{ts,tsx,js,json,md,yml}`) |
+| `commit-msg` | Message conforme à [Conventional Commits](docs/conventions-commit.md)     |
+
+Un commit qui ne respecte pas ces règles est refusé.
+
+## Organisation du travail
+
+- **Branches** : `main` (production) et `dev` (intégration) sont protégées ; tout passe par des branches éphémères et des Pull Requests — voir le [workflow Git](docs/workflow-git.md).
+- **Tâches** : chaque tâche est une issue GitHub, suivie sur le tableau Kanban du projet (Backlog → Ready → In progress → Review → Done).
+- **Pull Requests** : une PR référence son issue (`Closes #n`) pour la fermer automatiquement au merge.
+
+## Documentation
+
+| Document                                            | Contenu                                                              |
+| --------------------------------------------------- | -------------------------------------------------------------------- |
+| [Analyse du projet](docs/analyse-projet.md)         | Analyse du cahier des charges, architecture, sécurité, enjeux DevOps |
+| [Conventions de commit](docs/conventions-commit.md) | Format des messages, types, exemples, vérification automatique       |
+| [Workflow Git](docs/workflow-git.md)                | Branches, cycle de travail, hotfix, règles de protection             |

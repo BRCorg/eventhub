@@ -22,7 +22,7 @@ Définir un flux de travail simple et reproductible : chaque modification suit l
 <type>/<description-courte-en-kebab-case>
 ```
 
-Les types reprennent ceux des [conventions de commit](README.md#conventions-de-commit).
+Les types reprennent ceux des [conventions de commit](conventions-commit.md).
 
 ```
 feature/auth-jwt
@@ -134,7 +134,7 @@ Configurées sur GitHub dans **Settings → Branches → Branch protection rules
 
 Conséquence : aucun `git push` direct n'est possible sur `main` ou `dev`, toute modification passe par une Pull Request.
 
-![Règles de protection des branches](docs/captures/protection-branches.png)
+![Règles de protection des branches](captures/protection-branches.png)
 
 ## En résumé
 
