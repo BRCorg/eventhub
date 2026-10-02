@@ -1,0 +1,16 @@
+# Dépendances
+node_modules/
+
+# Builds et rapports
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Variables d'environnement (seul le modèle est versionné)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log

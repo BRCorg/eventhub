@@ -1,0 +1,8 @@
+# Normalise les fins de ligne en LF dans le dépôt et sur le disque,
+# quel que soit l'OS (évite les hooks Husky cassés par des CRLF sous Windows).
+* text=auto eol=lf
+
+# Fichiers binaires
+*.png binary
+*.jpg binary
+*.ico binary
