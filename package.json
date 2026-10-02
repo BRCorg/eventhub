@@ -1,0 +1,39 @@
+{
+  "name": "eventhub",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Ce projet suit la spécification **Conventional Commits** (v1.0.0) : une convention légère pour écrire des messages de commit lisibles par les humains et exploitables par des outils (génération de changelog, versionnage sémantique automatique, CI).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BRCorg/eventhub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BRCorg/eventhub/issues"
+  },
+  "homepage": "https://github.com/BRCorg/eventhub#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.9",
+    "typescript": "~6.0",
+    "typescript-eslint": "^8.71.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,json,md,yml}": "prettier --write"
+  }
+}
