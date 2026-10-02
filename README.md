@@ -60,7 +60,7 @@ eventhub/
 └── package.json               # Outils de qualité partagés
 ```
 
-À venir : `apps/api` (backend), `apps/web` (frontend), `nginx/` et les fichiers docker-compose.
+`apps/api` : API Express · `apps/web` : front React · `docker-compose.yml` : environnement de dev.
 
 ## Démarrage
 
@@ -81,6 +81,33 @@ npm install
 ```
 
 `npm install` installe aussi les hooks Git (script `prepare`) : aucune configuration manuelle n'est nécessaire.
+
+### Lancer l'environnement de développement (Docker)
+
+```bash
+cp .env.example .env        # puis changer les mots de passe
+docker compose up --build
+```
+
+| Service    | URL / port                        | Rôle                                    |
+| ---------- | --------------------------------- | --------------------------------------- |
+| `web`      | http://localhost:5173             | Front React (Vite, hot-reload)          |
+| `api`      | http://localhost:3000/api/healthz | API Express (nodemon + tsx, hot-reload) |
+| `postgres` | `localhost:5432`                  | Base relationnelle                      |
+| `mongo`    | `localhost:27017`                 | Base NoSQL                              |
+| `redis`    | `localhost:6379`                  | Cache                                   |
+
+- **Hot-reload** : le code de `apps/api` et `apps/web` est monté en **bind mount** ; toute modification redémarre l'API ou recharge la page.
+- **Volumes nommés** `pgdata` et `mongodata` : les données survivent à `docker compose down` (`docker compose down -v` pour tout effacer).
+- **Réseaux** : `backend` (API + bases) et `frontend` (web + API) ; le front n'a pas accès aux bases.
+- **Dockerfiles multi-stage** : `dev` (hot-reload), `build` (compilation), `prod` (image finale légère, utilisateur non-root pour l'API, Nginx pour le front).
+
+Construire les images de production :
+
+```bash
+docker build --target prod -t eventhub-api ./apps/api
+docker build --target prod -t eventhub-web ./apps/web
+```
 
 ### Scripts
 
