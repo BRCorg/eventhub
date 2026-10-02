@@ -16,8 +16,8 @@ Closes #
 
 ## Checklist
 
-- [ ] La branche suit le nommage `<type>/<description>` ([workflow](../docs/workflow-git.md))
-- [ ] Les commits respectent [Conventional Commits](../docs/conventions-commit.md)
+- [ ] La branche suit le nommage `<type>/<description>` ([workflow](https://github.com/BRCorg/eventhub/blob/dev/docs/workflow-git.md))
+- [ ] Les commits respectent [Conventional Commits](https://github.com/BRCorg/eventhub/blob/dev/docs/conventions-commit.md)
 - [ ] La PR cible la bonne branche (`dev`, ou `main` pour une livraison / un hotfix)
 - [ ] `npm run lint` passe
 - [ ] La documentation est à jour si nécessaire
