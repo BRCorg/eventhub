@@ -68,14 +68,17 @@ hotfix/token-expire
    git switch dev
    git pull
    git branch -d feature/auth-jwt
+   git push origin --delete feature/auth-jwt
    ```
 
-7. **Livrer** : ouvrir une Pull Request de `dev` vers `main`, puis taguer la version
+   La suppression distante est automatique si l'option **Settings → General → Automatically delete head branches** est activée.
+
+7. **Livrer** : ouvrir une Pull Request de `dev` vers `main` (stratégie **Create a merge commit**), puis poser un tag annoté et publier une release GitHub
 
    ```bash
    git switch main
    git pull
-   git tag v1.0.0
+   git tag -a v1.0.0 -m "v1.0.0 : description de la version"
    git push origin v1.0.0
    ```
 
@@ -126,11 +129,14 @@ Configurées sur GitHub dans **Settings → Branches → Branch protection rules
 | Règle                                                | `main` | `dev` |
 | ---------------------------------------------------- | :----: | :---: |
 | Pull Request obligatoire avant merge                 |   ✅   |  ✅   |
+| Approbations requises                                |   0    |   0   |
 | Résolution des conversations obligatoire             |   ✅   |  ✅   |
 | Vérifications CI obligatoires (dès que la CI existe) |   ✅   |  ✅   |
 | Règles appliquées aussi aux administrateurs          |   ✅   |   —   |
 | Force push autorisé                                  |   ❌   |  ❌   |
 | Suppression de la branche autorisée                  |   ❌   |  ❌   |
+
+> **Approbations à 0** : le projet est réalisé seul et GitHub interdit d'approuver sa propre Pull Request. La PR reste obligatoire ; seule la relecture par un tiers est désactivée. À passer à 1 en équipe.
 
 Conséquence : aucun `git push` direct n'est possible sur `main` ou `dev`, toute modification passe par une Pull Request.
 
