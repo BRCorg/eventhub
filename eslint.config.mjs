@@ -14,8 +14,8 @@ export default defineConfig([
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
-  // React 17+ : plus besoin d'importer React dans chaque fichier JSX
+  // Plus besoin d'importer React dans chaque fichier
   pluginReact.configs.flat["jsx-runtime"],
-  // Version explicite tant que React n'est pas installé (passer à "detect" ensuite)
+  // À passer en "detect" quand React sera installé à la racine
   { settings: { react: { version: "19" } } },
 ]);

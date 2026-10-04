@@ -1,8 +1,7 @@
-# Normalise les fins de ligne en LF dans le dépôt et sur le disque,
-# quel que soit l'OS (évite les hooks Husky cassés par des CRLF sous Windows).
+# Fins de ligne en LF partout, sinon les hooks Husky plantent sous Windows
 * text=auto eol=lf
 
-# Fichiers binaires
+# Les images, Git n'y touche pas
 *.png binary
 *.jpg binary
 *.ico binary

@@ -7,7 +7,7 @@ build/
 coverage/
 *.tsbuildinfo
 
-# Variables d'environnement (seul le modèle est versionné)
+# Les secrets restent en local, on garde juste le modèle
 .env
 .env.*
 !.env.example
