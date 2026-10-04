@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 # On installe les dépendances
 FROM node:22-alpine AS deps
 WORKDIR /app

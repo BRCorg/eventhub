@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 # On part d'une image Node légère
 FROM node:22-alpine AS base
 WORKDIR /app
