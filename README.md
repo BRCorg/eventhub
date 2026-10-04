@@ -60,7 +60,7 @@ eventhub/
 └── package.json               # Outils de qualité partagés
 ```
 
-`apps/api` : API Express · `apps/web` : front React · `docker-compose.yml` : environnement de dev.
+`apps/api` : API Express · `apps/web` : front React · `nginx/` : configuration du reverse proxy · `docker-compose.yml` : environnement de dev.
 
 ## Démarrage
 
@@ -89,17 +89,19 @@ cp .env.example .env        # puis changer les mots de passe
 docker compose up --build
 ```
 
-| Service    | URL / port                        | Rôle                                    |
-| ---------- | --------------------------------- | --------------------------------------- |
-| `web`      | http://localhost:5173             | Front React (Vite, hot-reload)          |
-| `api`      | http://localhost:3000/api/healthz | API Express (nodemon + tsx, hot-reload) |
-| `postgres` | `localhost:5432`                  | Base relationnelle                      |
-| `mongo`    | `localhost:27017`                 | Base NoSQL                              |
-| `redis`    | `localhost:6379`                  | Cache                                   |
+| Service    | URL / port                        | Rôle                                              |
+| ---------- | --------------------------------- | ------------------------------------------------- |
+| `nginx`    | http://localhost:8080             | **Seul point d'entrée** : `/` → web, `/api` → api |
+| `web`      | via Nginx                         | Front React (Vite, hot-reload)                    |
+| `api`      | http://localhost:8080/api/healthz | API Express (nodemon + tsx, hot-reload)           |
+| `postgres` | `localhost:5432`                  | Base relationnelle                                |
+| `mongo`    | `localhost:27017`                 | Base NoSQL                                        |
+| `redis`    | `localhost:6379`                  | Cache                                             |
 
 - **Hot-reload** : le code de `apps/api` et `apps/web` est monté en **bind mount** ; toute modification redémarre l'API ou recharge la page.
 - **Volumes nommés** `pgdata` et `mongodata` : les données survivent à `docker compose down` (`docker compose down -v` pour tout effacer).
-- **Réseaux** : `backend` (API + bases) et `frontend` (web + API) ; le front n'a pas accès aux bases.
+- **Réseaux** : `backend` (API + bases) et `frontend` (Nginx + web + API) ; le front n'a pas accès aux bases.
+- **Nginx** : reverse proxy devant le front et l'API ; le navigateur ne parle qu'à lui (websocket compris, pour le hot-reload de Vite).
 - **Dockerfiles multi-stage** : `dev` (hot-reload), `build` (compilation), `prod` (image finale légère, utilisateur non-root pour l'API, Nginx pour le front).
 
 Construire les images de production :
